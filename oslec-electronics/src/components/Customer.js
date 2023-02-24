@@ -1,0 +1,105 @@
+import moment from "moment";
+import { Link } from "react-router-dom";
+import { useAppContext } from "../context/appContext";
+import Wrapper from "../assets/wrappers/Customer";
+import CustomerInfo from "./CustomerInfo";
+import {Modal, Button} from 'react-bootstrap'
+import { useState } from "react";
+const Customer = ({
+  _id,
+  trackingNumber,
+  lastName,
+  firstName,
+  product,
+  serialNumber,
+  brand,
+  replacedParts,
+  fixingparts,
+  description,
+  estimate,
+  status,
+  address,
+  price,
+  createdAt,
+  warrantyStartAt,
+  warrantyEndAt,
+  isTrue,
+  paymentStatus
+}) => {
+  const { setEditCustomer, deleteCustomer } = useAppContext();
+  let date = moment(createdAt);
+  date = date.format("MM Do, YYYY");
+  const [show, setShow] = useState(false)
+
+  const handleClose = () =>{
+    setShow(false)
+  }
+
+  const openModal = () =>{
+    setShow(true)
+  }
+  return (
+    <Wrapper>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Do you really want to delete this data?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => deleteCustomer(_id)}>
+            Delete
+          </Button>                                           
+          <Button variant="primary" onClick={handleClose}>
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <header>
+        <div className="main-icon">{lastName.charAt(0)}</div>
+        <div className="info">
+          <h5>{`${lastName}, ${firstName}`}</h5>
+          <p>{product}</p>
+        </div>
+      </header>
+      <div className="content">
+        <div className="content-center">
+          <CustomerInfo icon="Brand:" text={brand} />
+          <CustomerInfo icon="Serial No.:" text={serialNumber} />
+          <CustomerInfo icon="Replacement Parts:" text={replacedParts} />
+          <CustomerInfo icon="Fixing Parts:" text={fixingparts} />
+          <CustomerInfo icon="Address:" text={address} />
+          <CustomerInfo icon="Tracking No.:" text={trackingNumber} />
+          <CustomerInfo icon="Estimate:" text={estimate} />
+          <CustomerInfo icon="Description:" text={description} />
+          <CustomerInfo icon="₱" text={price} />
+          <CustomerInfo icon="Date:" text={date} />
+          <div className={`status ${status}`}>{status}</div>
+          <CustomerInfo icon="Payment Status:" text={paymentStatus} />
+          <CustomerInfo icon="Warranty Start At:" text={warrantyStartAt} />
+          <CustomerInfo icon="Warranty End At:" text={warrantyEndAt} />
+        </div>
+        <footer>
+          <div className="actions">
+            <Link
+              to="/dashboard/add-customer"
+              className="btn edit-btn"
+              onClick={() => setEditCustomer(_id)}
+            >
+              Edit
+            </Link>
+            <button
+              type="button"
+              className="btn delete-btn"
+              onClick={() => openModal()}
+              disabled={isTrue ? true : false}
+            >
+              Delete
+            </button>
+          </div>
+        </footer>
+      </div>
+    </Wrapper>
+  );
+};
+
+export default Customer;
