@@ -50,10 +50,17 @@ const ReceiptContainer = () => {
   let statusColorGreen;
   const align = {textAlign: 'center'}
 
+  if (customerReceipt.length === 0) {
+    return (
+      <Wrapper>
+        <h2>No Customers Display</h2>
+      </Wrapper>
+    );
+  }
   return (
     <Wrapper>
       {customerReceipt.map((record, index) => {
-          if(searchLastNameReceipt || searchFirstNameReceipt) {
+        if(record.lastName.toLowerCase() === searchLastNameReceipt.toLowerCase() || record.firstName.toLowerCase() === searchFirstNameReceipt.toLowerCase()) {
           if(record.status === 'completed'){
             statusColor = '#d1e7dd'
             statusColorGreen = '#008000'
@@ -189,61 +196,11 @@ const ReceiptContainer = () => {
             
           </MDBContainer>
             );
-          }
-        })}
+          } 
+          
+        })} 
     
       
-      {/* <div className="table-body" ref={refPrint}  style={{overflowX : 'auto', fontSize: '14px'}}>
-        
-            <table className="table table-striped table-bordered table-responsive">
-              <thead style={{ fontSize: 13 }}>
-                <tr>
-                  <th>TRACKING NUMBER</th>
-                  <th>LAST NAME</th>
-                  <th>FIRST NAME</th>
-                  <th>PRODUCT</th>
-                  <th>SERIAL NO.</th>
-                  <th>BRAND</th>
-                  <th>REPLACEMENT PARTS</th>
-                  <th>FIXING PARTS</th>
-                  <th>DESCRIPTION</th>
-                  <th>ESTIMATE</th>
-                  <th>STATUS</th>
-                  <th>ADDRESS</th>
-                  <th>PRICE</th>
-                  <th>WARRANTY START AT</th>
-                  <th>WARRANTY END AT</th>
-                  <th>DATE</th>
-                </tr>
-              </thead>
-              <tbody style={{ fontSize: 13 }}>
-              {customerReceipt.map((record, index) => {
-                if(searchLastNameReceipt || searchFirstNameReceipt) {
-                  return (
-                      <tr key={index}>
-                        <td>{record.trackingNumber}</td>
-                        <td>{record.lastName}</td>
-                        <td>{record.firstName}</td>
-                        <td>{record.product}</td>
-                        <td>{record.serialNumber}</td>
-                        <td>{record.brand}</td>
-                        <td>{record.replacedParts}</td>
-                        <td>{record.fixingparts}</td>
-                        <td>{record.description}</td>
-                        <td>{record.estimate}</td>
-                        <td>{record.status}</td>
-                        <td>{record.address}</td>
-                        <td>{record.price}</td>
-                        <td>{record.warrantyStartAt}</td>
-                        <td>{record.warrantyEndAt}</td>
-                        <td>{moment(record.createdAt).format("MM/DD/YYYY")}</td>
-                      </tr>
-                    );
-                  }
-                })}
-            </tbody>
-            </table>
-      </div> */}
     </Wrapper>
   );
 };

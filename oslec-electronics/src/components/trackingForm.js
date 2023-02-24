@@ -20,6 +20,7 @@ const Customer = ({
   createdAt,
   warrantyStartAt,
   warrantyEndAt,
+  paymentStatus
 }) => {
   let date = moment(createdAt);
   date = date.format("MM Do, YYYY");
