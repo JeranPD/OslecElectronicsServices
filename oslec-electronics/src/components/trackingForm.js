@@ -45,6 +45,7 @@ const Customer = ({
           <CustomerInfo icon="₱" text={price} />
           <CustomerInfo icon="Date:" text={date} />
           <div className={`status ${status}`}>{status}</div>
+          <CustomerInfo icon="Payment Status:" text={paymentStatus} />
           <CustomerInfo icon="Warranty Start At:" text={warrantyStartAt} />
           <CustomerInfo icon="Warranty End At:" text={warrantyEndAt} />
         </div>
